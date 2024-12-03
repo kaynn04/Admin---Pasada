@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-menu">
+            <ul>
+                <li>
+                    <a href="index.html"><span class="las la-igloo"></span>
+                    <span>Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="customer.html"><span class="las la-users"></span>
+                    <span>Customers</span></a>
+                </li>
+                <li>
+                    <a href="employee.html" class="active"><span class="las la-clipboard-list"></span>
+                    <span>Drivers</span></a>
+                </li>
+                <li>
+                    <a href="routes.html"><span class="las la-road"></span>
+                    <span>Routes</span></a>
+                </li>
+                <li>
+                    <a href="history.html"><span class="las la-receipt"></span>
+                    <span>History</span></a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Logout Menu -->
+        <div class="sidebar-logout">
+            <ul>
+                <li>
+                    <a href="#" onclick="showLogoutModal(event)">
+                        <span class="las la-sign-out-alt"></span>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <h2>Confirm Logout</h2>
+            <p>Are you sure you want to log out?</p>
+            <div class="modal-actions">
+                <button onclick="confirmLogout()">Yes</button>
+                <button onclick="closeModal()">No</button>
+            </div>
+        </div>
+     </div>
+
+    <div class="main-content">
+        <header>
+            <div class="logo-wrapper">
+                <img src="images/MyPicture.jpg" alt="Logo" class="logo">
+                <h2>PASADA</h2>
+            </div>
+
+            <!-- Burger Icon -->
+            <div class="burger-icon" onclick="toggleSidebar()">
+                <span class="la la-bars"></span>
+            </div>
+
+            <div class="search-wrapper">
+                <span class="las la-search"></span>
+                <input type="search" placeholder="Search here" />
+            </div>   
+
+            <div class="user-wrapper">
+                <img src="images/MyPicture.jpg" width="40px" height="40px" alt="">
+                <div>
+                    <h4>Kyan Oclares</h4>
+                    <small>admin</small>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="employee-form">
+                <h2>Driver Details</h2>
+                <form>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" placeholder="Enter name" required>
+
+                    <label for="group">Group:</label>
+                    <select id="group" required>
+                        <option value="">Select group</option>
+                        <option value="general">General</option>
+                        <option value="driver">Driver</option>
+                        <option value="operator">Operator</option>
+                        <option value="any">Any</option>
+                    </select>
+
+                    <label for="body-number">Body Number:</label>
+                    <input type="text" id="body-number" placeholder="Enter body number" required>
+
+                    <label for="phone">Phone Number:</label>
+                    <input type="text" id="phone" placeholder="Enter phone number" required>
+
+                    <label for="status">Status:</label>
+                    <select id="status" required>
+                        <option value="">Select status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="any">Any</option>
+                    </select>
+
+                    <button type="submit">Filter</button>
+                </form>
+            </div>
+
+            <div class="employee-header">
+                <button class="add-employee">Add Driver</button>
+                <span class="employee-count">Total Drivers: 1</span>
+                <button class="remove-employee">Remove Driver</button>
+            </div>
+
+            <div class="employee-list">
+                <h2>Driver List</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Group</th>
+                            <th>Body Number</th>
+                            <th>Phone Number</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>Driver</td>
+                            <td>12345</td>
+                            <td>09197009546</td>
+                            <td><span class="status-circle"></span> Active</td>
+                            <td>
+                                <button>Edit</button>
+                                <button>Delete</button>
+                            </td>
+                        </tr>
+                        <!-- More rows as needed -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+<script src="script.js"></script>   
+</body>
+</html>

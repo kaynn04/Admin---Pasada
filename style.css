@@ -1,0 +1,1058 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+    --main-color: #ffffff;
+    --sidebar-menu-bg: #f0f0f0;
+    --sidebar-brand-bg: #ffffff;
+    --color-dark: #1d2231;
+    --text-black: #000000;
+    --background-color: #f1f5f9;
+    --card-background: #fff;
+    --active-bg-color: #79a8e531;
+    --active-text-color: #0b6dee;
+    --hover-color: #f0f8ff;
+    --transition-speed: 0.3s;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+.sidebar {
+    width: 320px;
+    margin-left: 20px;
+    padding-bottom: 20px;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    transition: transform 0.3s ease-in-out;
+    margin-top: 100px;
+}
+
+/* Hide sidebar by default on small screens */
+.sidebar {
+    transform: translateX(0); /* Move sidebar out of view */
+}
+
+.sidebar.active {
+    transform: translateX(-100%); /* Move sidebar out of view */
+}
+
+.sidebar-brand, .sidebar-menu, .sidebar-logout {
+    padding-left: 10px;
+}
+
+.sidebar-menu {
+    background-color: var(--background-color); /* Background color for the sidebar menu */
+    padding: 1rem;
+    margin-top: 1rem; /* Ensure the menu starts after the sidebar brand */
+    position: relative; /* Ensure the menu is correctly positioned */
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: var(--main-color);
+    margin-left: -0.3rem;
+}
+
+.sidebar-brand {
+    background-color: var(--main-color); /* Match background color */
+    padding: 0.3rem 5rem;
+    border-bottom: 1px solid #ddd;
+    position: relative; /* Ensure the brand stays in its place */
+    z-index: 2; /* Ensure it stays above the sidebar menu */
+    height: 90px; /* Set height to match header */
+    display: flex; /* Use flexbox for vertical alignment */
+    align-items: center; /* Center items vertically */
+    margin-left: -20px;
+}
+
+.sidebar-brand h1 {
+    margin: 0; /* Remove default margin from h1 */
+}
+
+.sidebar-brand span {
+    display: inline-block;
+    padding-right: 1rem;
+}
+
+.sidebar-menu li {
+    width: 100%;
+    margin-bottom: 1.3rem;
+    padding-left: 3rem;
+    transition: var(--background-color) var(--transition-speed);
+}
+
+.sidebar-menu a {
+    padding-left: 1rem;
+    display: block;
+    color: var(--text-black);
+    font-size: 1.1rem;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    margin-right: 55px; /* Ensure margin stays consistent */
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.sidebar-menu a.active,
+.sidebar-menu a:hover {
+    background-color: #79a8e531;
+    color: #0b6dee;
+    border-radius: 5px;
+    /* No margin changes on hover */
+}
+
+/* yung indicator kung anong sidebar ang currently open */
+.sidebar-menu a.active {
+    background-color: #79a8e531;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-right: 55px;
+    color: #0b6dee;
+    border-radius: 5px;
+}
+
+.sidebar-menu a span:first-child {
+    font-size: 1.5rem;
+    padding-right: 1rem;
+}
+
+/* Sidebar Logout Section */
+.sidebar-logout {
+    background-color: var(--background-color); /* Background color for the sidebar menu */
+    padding: 1rem;
+    margin-top: 1rem; /* Ensure the menu starts after the sidebar brand */
+    position: relative; /* Ensure the menu is correctly positioned */
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: var(--main-color);
+    margin-left: -5px;
+}
+
+.sidebar-logout h1 {
+    margin: 0; /* Remove default margin from h1 */
+}
+
+.sidebar-logout ul {
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-logout li {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    padding-left: 3rem;
+    transition: var(--background-color) var(--transition-speed);
+}
+
+.sidebar-logout span {
+    display: inline-block;
+    padding-right: 1rem;
+}
+
+.sidebar-logout a:hover {
+    background-color: #79a8e531;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #d9534f;  /* Red color for logout */
+}
+
+
+.sidebar-logout a {
+    display: block;
+    color: var(--text-black);
+    font-size: 1.1rem;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    margin-right: 55px; /* Ensure margin stays consistent */
+    padding-left: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.sidebar-logout a span:first-child {
+    font-size: 1.5rem;
+    padding-right: 1rem;
+}
+
+/* Burger Menu */
+.burger-icon {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.burger-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Modal Code */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 30%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-actions button {
+    margin: 15px;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 120px;
+    transition: all 0.3s ease;
+}
+
+.modal-actions button:first-child {
+    background-color: #f44336;
+    color: white;
+}
+
+.modal-actions button:last-child {
+    background-color: #ccc;
+}
+
+.modal-actions button:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+
+.main-content {
+    margin-left: 340px; /* Ensure main content aligns properly next to the sidebar */
+    min-height: 100vh; /* Ensure it takes at least the full height of the viewport */
+    background-color: var(--background-color); /* Ensure content background is consistent */
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    align-items: center;
+    background-color: var(--main-color);
+    height: 90px;
+    margin-bottom: 13px;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.logo-wrapper h2 {
+    color: #222;
+    margin: 0;
+}
+
+header h2 {
+    color: #222;
+}
+
+header label span {
+    font-size: 1.7rem;
+    padding-left: 1rem;
+}
+
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    width: 40%;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    background-color: #fff;
+    height: 50px;
+    overflow-x: hidden;
+}
+
+.search-wrapper span {
+    display: inline-block;
+    padding: 0 1rem;
+    font-size: 1.5rem;
+    color: #888;
+}
+
+.search-wrapper input {
+    flex-grow: 1;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.user-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-wrapper img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.user-wrapper img:hover {
+    transform: scale(1.1);
+}
+
+.user-wrapper h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: #222;
+}
+
+.user-wrapper small {
+    color: #888;
+}
+
+main {
+    margin-top: 85px;
+    padding: 2rem 1.5rem;
+    background: #f1f5f9;
+    min-height: calc(100vh - 90px);
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+/* Card styles */
+.card-single {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow var(--transition-speed), transform var(--transition-speed);
+    flex: 1 1 calc(25% - 20px); /* Default to 4 cards per row on large screens */
+}
+
+.card-single:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+    transform: translateY(-5px); /* Added lift effect on hover */
+}
+
+.card-single h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    color: var(--text-black);
+}
+
+.card-single span:first-child{
+    color: var(--color-dark);
+    font-size: 1.5rem;
+}
+
+.card-single span:first-child {
+    font-size: 3rem;
+}
+
+.recent-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.recent-grid .projects,
+.recent-grid .customers {
+    flex: 1;
+}
+
+.card {
+    background: var(--card-background);
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow var(--transition-speed), transform var(--transition-speed);
+}
+
+.card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+    transform: translateY(-5px); /* Added lift effect on hover */
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--text-black);
+}
+
+.card-header button {
+    background: var(--active-bg-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    color: var(--active-text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color var(--transition-speed);
+}
+
+.card-header button:hover {
+    background: var(--hover-color); /* Added hover effect */
+}
+
+.card-header button span {
+    margin-left: 0.5rem;
+}
+
+.card-body {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead td {
+    font-weight: 600;
+    padding: 1rem;
+    text-align: left;
+    color: var(--text-black);
+    background: var(--background-color);
+}
+
+table tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+table tbody tr:last-child {
+    border-bottom: none;
+}
+
+table tbody td {
+    padding: 1rem;
+    text-align: left;
+    color: var(--text-black);
+}
+
+.status {
+    width: 10px;
+    height: 10px;
+    background-color: #ffc107;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.customer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.customer img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+    transition: transform var(--transition-speed);
+}
+
+.customer img:hover {
+    transform: scale(1.1); /* Added scale effect on hover */
+}
+
+.customer div:first-child {
+    display: flex;
+    align-items: center;
+}
+
+.csutomer h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-black);
+}
+
+.customer small {
+    color: var(--color-dark);
+    font-size: 0.875rem;
+}
+
+.customer div:last-child {
+    display: flex;
+    gap: 10px;
+}
+
+.customer div:last-child span {
+    font-size: 1.2rem;
+    color: var(--color-dark);
+    cursor: pointer;
+}
+
+.customer div:last-child span:hover {
+    color: var(--active-text-color); /* Added color change on hover */
+}
+
+.history {
+    margin-top: 40px;
+}
+
+/* Styling for employee.html */
+
+/* Flex containers and headers */
+.employee-header,
+.customer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.customer-header {
+    justify-content: center;
+}
+
+.employee-header .employee-count {
+    font-size: 1.1rem;
+    color: var(--text-black);
+}
+
+/* Button Styling */
+.employee-header button {
+    background: var(--active-bg-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    color: var(--active-text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.employee-header button.add-employee {
+    background-color: #4CAF50;
+    color: var(--main-color);
+}
+
+.employee-header button.remove-employee {
+    background-color: #f44336;
+    color: var(--main-color);
+}
+
+/* Hover effects */
+.employee-header button.add-employee:hover {
+    background-color: #66bb6a;
+}
+
+.employee-header button.remove-employee:hover {
+    background-color: #ef5350;
+}
+
+/* Form and List Styling */
+.employee-form, .employee-list {
+    margin-top: -0.6rem;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.employee-form h2, .employee-list h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: var(--text-black);
+}
+
+.employee-form label {
+    margin-right: 0.3rem;
+    font-weight: 100;
+}
+
+.employee-form input, .employee-form select {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 1rem;
+}
+
+/* Button Styling for Form */
+.employee-form button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--active-bg-color);
+    color: var(--active-text-color);
+    cursor: pointer;
+}
+
+.employee-form button:hover {
+    background-color: var(--hover-color);
+}
+
+/* Table and List Styling */
+.employee-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+.employee-list th, .employee-list td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.employee-list th {
+    background: var(--background-color);
+    color: var(--text-black);
+}
+
+.employee-list td button {
+    margin-right: 0.5rem;
+    padding: 0.3rem 0.6rem;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--active-bg-color);
+    color: var(--active-text-color);
+    cursor: pointer;
+}
+
+.employee-list td button:hover {
+    background-color: var(--hover-color);
+}
+
+/* Status circle for employee status */
+.status-circle {
+    width: 10px;
+    height: 10px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* Styling for routes.html */
+
+.route-form, .route-list {
+    margin-top: -0.6rem;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.route-form h2, .route-list h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: var(--text-black);
+}
+
+.route-form label {
+    margin-right: 0.3rem;
+    font-weight: 100;
+}
+
+.route-form input {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 1rem;
+}
+
+.route-form button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--active-bg-color);
+    color: var(--active-text-color);
+    cursor: pointer;
+}
+
+.route-form button:hover {
+    background-color: var(--hover-color);
+}
+
+.route-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.route-header button {
+    background: var(--active-bg-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    color: var(--active-text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.route-header button.add-route {
+    background-color: #4CAF50; /* Green for Add Route */
+    color: #fff;
+}
+
+.route-header button.remove-route {
+    background-color: #f44336; /* Red for Remove Route */
+    color: #fff;
+}
+
+/* Hover effects */
+.route-header button.add-route:hover {
+    background-color: #66bb6a; /* Light green */
+}
+
+.route-header button.remove-route:hover {
+    background-color: #ef5350; /* Light red */
+}
+
+.route-header .route-count {
+    font-size: 1.1rem;
+    color: var(--text-black);
+}
+
+.route-list {
+    margin-top: 0.5rem;
+}
+
+.route-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.route-list th, .route-list td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.route-list th {
+    background: var(--background-color);
+    color: var(--text-black);
+}
+
+.route-list td button {
+    margin-right: 0.5rem;
+    padding: 0.3rem 0.6rem;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--active-bg-color);
+    color: var(--active-text-color);
+    cursor: pointer;
+}
+
+.route-list td button:hover {
+    background-color: var(--hover-color);
+}
+
+/* Styling for history.html */
+
+.history-form, .history-list {
+    margin-top: -0.6rem;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.history-form h2, .history-card h2, .history-list h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: var(--text-black);
+}
+
+.history-form label {
+    margin-right: 0.3rem;
+    font-weight: 100;
+}
+
+.history-form input {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 1rem;
+}
+
+.history-form button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--active-bg-color);
+    color: var(--active-text-color);
+    cursor: pointer;
+}
+
+.history-form button:hover {
+    background-color: var(--hover-color);
+}
+
+.history-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.history-card, .transaction-count {
+    font-size: 1.1rem;
+    color: var(--text-black);
+    margin-top: 0.9rem;
+}
+
+.history-list {
+    margin-top: 1rem;
+}
+
+.history-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.history-list th, .history-list td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.history-list th {
+    background: var(--background-color);
+    color: var(--text-black);
+}
+
+.history-list td {
+    color: var(--text-black);
+}
+
+table thead td {
+    font-weight: 600;
+    padding: 1rem;
+    background-color: var(--sidebar-menu-bg);
+    color: var(--color-dark);
+}
+
+table tbody td {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #e0e0e0;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 1019px) {
+    .recent-grid {
+        flex-direction: column;
+    }
+
+    .recent-grid .projects,
+    .recent-grid .customers {
+        flex: none;
+        width: 100%;
+    }
+}
+
+@media (max-width: 1199px) {
+    .card-single {
+        flex: 1 1 calc(33.33% - 20px); /* 3 cards per row */
+    }
+}
+
+@media (max-width: 910px) {
+    /* Customers */
+    .employee-header, .customer-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .employee-header .employee-count {
+        margin-top: 10px;
+        font-size: 1rem;
+    }
+
+    .employee-form {
+        padding: 1rem;
+    }
+
+    .employee-form input, .employee-form select, .employee-form button {
+        margin-right: 0;
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    .employee-list {
+        margin-top: 1rem;
+    }
+
+    .employee-list table {
+        font-size: 0.9rem;
+    }
+
+    .employee-list th, .employee-list td {
+        padding: 0.8rem;
+    }
+
+    .employee-list td button {
+        padding: 0.3rem 0.6rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        transform: translateX(-150%);
+        width: 300px;
+    }
+
+    .sidebar.active {
+        transform: translateX(0); /* Move sidebar into view */
+    }
+
+    .main-content {
+        margin-left: 0; /* Remove left margin for mobile */
+    }
+
+    .sidebar-menu {
+        padding: 0.5rem;
+        margin-left: 0;
+    }
+
+    .cards {
+        flex-direction: column;
+    }
+
+    .card-single {
+        flex: 1 1 100%;
+        margin-bottom: 20px;
+    }
+
+    .modal-content {
+        width: 80%;
+    }
+
+    header {
+        padding: 0.5rem;
+        justify-content: space-between;
+    }
+
+    .search-wrapper {
+        width: 50%;
+        max-width: 200px;
+    }
+
+    .burger-icon {
+        display: block; /* Show burger icon on small screens */
+    }
+
+}
+
+@media (max-width: 480px) {
+    .cards {
+        display: flex;
+        flex-direction: column; /* Stack cards vertically */
+        gap: 20px;
+    }
+
+    .card-single {
+        flex: 1 1 100%; /* 1 card per row */
+        padding: 1rem;
+    }
+
+    /* Customer */
+
+    .employee-form h2, .employee-list h2 {
+        font-size: 1.2rem;
+    }
+
+    .employee-form input, .employee-form select, .employee-form button {
+        font-size: 0.8rem;
+    }
+
+    .employee-header button {
+        width: 100%;
+        margin-top: 10px;
+        padding: 0.6rem;
+    }
+
+    .employee-list td button {
+        padding: 0.3rem 0.5rem;
+    }
+
+    .employee-list table {
+        font-size: 0.85rem;
+    }
+
+    .employee-list th, .employee-list td {
+        padding: 0.6rem;
+    }
+}
