@@ -61,6 +61,47 @@
         </div>
      </div>
 
+    <!-- Modal -->
+    <div id="add-driver-modal" class="modal">
+        <div class="modal-content">
+            <h2>Driver Information</h2>
+            <div class="modal-actions">
+                <div class="signup-wrapper">
+                    <div class="signup-card">
+                        <form id="addDriver-form" action="#" method="POST">
+                            <div class="input-wrapper">
+                                <label for="lname">Last Name</label>
+                                <input type="text" id="lname" name="lname" placeholder="Driver First Name" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="fname">Firt Name</label>
+                                <input type="fname" id="fname" name="fname" placeholder="Driver Last Name" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="contactNum">Contact Number</label>
+                                <input type="contactNum" id="contactNum" name="contactNum" placeholder="Driver Contact Number" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="bodyNum">Tricycle Body Number</label>
+                                <input type="bodyNum" id="bodyNum" name="bodyNum" placeholder="Tricyecle Body Number" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="confirm-password">Confirm Password</label>
+                                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+                            </div>
+                            <button type="submit" id="addDriver-btn" class="addDriver-btn">Add Driver</button>
+                        </form>
+                    </div>
+                </div>
+                <button onclick="closeAddDriverModal()">Cancel</button>
+            </div>
+        </div>
+     </div>
+
     <div class="main-content">
         <header>
             <div class="logo-wrapper">
@@ -122,9 +163,9 @@
             </div>
 
             <div class="employee-header">
-                <button class="add-employee">Add Driver</button>
+                <button class="add-employee" id="add-employee" onclick="showAddDriverModal(event)">Add Driver</button>
                 <span class="employee-count">Total Drivers: 1</span>
-                <button class="remove-employee">Remove Driver</button>
+                <button class="remove-employee" id="remove-employee">Remove Driver</button>
             </div>
 
             <div class="employee-list">
@@ -159,6 +200,13 @@
         </main>
     </div>
 
+<!-- firebase -->
+<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-auth.js"></script>
 <script src="script.js"></script>   
+
+
+
 </body>
 </html>
