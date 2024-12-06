@@ -52,6 +52,38 @@ function closeAddDriverModal() {
     document.getElementById("add-driver-modal").style.display = "none";
 }
 
+//Function to add routes
+function showAddRouteModal(event) {
+    event.preventDefault();
+    document.getElementById("add-route-modal").style.display = "block";
+
+    const form = document.getElementById("addRoute-form");
+    const clone = form.cloneNode(true);
+    form.replaceWith(clone);
+
+    clone.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const origin = document.getElementById("origin").value;
+        const destination = document.getElementById("destination").value;
+        const fare = document.getElementById("fare").value;
+        const service = document.getElementById("service").value;
+        
+        if (origin && destination && fare && service) {
+            addRouteData(origin, destination, fare, service);
+
+            clone.reset();
+            closeAddRouteModal();
+        } else {
+            alert("Please fill out all the fields");
+        }
+    });
+}
+
+function closeAddRouteModal() {
+    document.getElementById("add-route-modal").style.display = "none";
+}
+
 // FIREBASE -----------------------------
 
 const firebaseConfig = {
@@ -108,8 +140,153 @@ function retrieveEmployeeData(){
     });
 }
 
-function addDriverData(fname, lname, bodyNum, contactNum, password) {
+function retrieveCustomerData() {
+    const tableBody = document.querySelector('.employee-list tbody')
+    database.ref('User').once('value', function(snapshot){
+        if (snapshot.exists()){
+            var users = snapshot.val();
+        
+            var sortedKeys = Object.keys(users).sort((a, b) => a - b);
+        
+            tableBody.innerHTML = '';
+        
+            sortedKeys.forEach(function(key) {
+                var user = users[key];
+        
+                const row = document.createElement('tr');
+                row.id = key;
+        
+                row.innerHTML = `
+                    <td>${user.fname} ${user.lname}</td>
+                    <td>Customer</td>
+                    <td>${user.email}</td>
+                    <td>${user.contactNum}</td>
+                    <td>
+                        <button>Edit</button>
+                    </td>
+                `;
+        
+                tableBody.appendChild(row);
+            });
+        } else {
+            tableBody.innerHTML = '<tr><td colspan="6">No Users found</td></tr>';
+        }
+    }, function(error) {
+            console.error("Error retrieving data:", error);
+            tableBody.innerHTML = '<tr><td colspan="6">Error loading data</td></tr>';
+    });
+}
 
+function retrieveHistory() {
+    const tableBody = document.querySelector('.history-list tbody')
+    database.ref('History').once('value', function(snapshot){
+        if (snapshot.exists()){
+            var histories = snapshot.val();
+        
+            var sortedKeys = Object.keys(histories).sort((a, b) => a - b);
+        
+            tableBody.innerHTML = '';
+        
+            sortedKeys.forEach(function(key) {
+                var history = histories[key];
+        
+                const row = document.createElement('tr');
+                row.id = key;
+        
+                row.innerHTML = `
+                    <td>${history.driver}</td>
+                    <td>${history.date}</td>
+                    <td>${history.bodyNum}</td>
+                    <td>${history.phoneNumber}</td>
+                    <td>${history.route}</td>
+                `;
+        
+                tableBody.appendChild(row);
+            });
+        } else {
+            tableBody.innerHTML = '<tr><td colspan="6">No History found</td></tr>';
+        }
+    }, function(error) {
+            console.error("Error retrieving data:", error);
+            tableBody.innerHTML = '<tr><td colspan="6">Error loading data</td></tr>';
+    });
+}
+
+function retrieveRoutes() {
+    const tableBody = document.querySelector('.route-list tbody')
+    database.ref('Route').once('value', function(snapshot){
+        if (snapshot.exists()){
+            var routes = snapshot.val();
+        
+            var sortedKeys = Object.keys(routes).sort((a, b) => a - b);
+        
+            tableBody.innerHTML = '';
+        
+            sortedKeys.forEach(function(key) {
+                var route = routes[key];
+        
+                const row = document.createElement('tr');
+                row.id = key;
+        
+                row.innerHTML = `
+                    <td>${route.origin}</td>
+                    <td>${route.destination}</td>
+                    <td>${route.fare}</td>
+                    <td>${route.service}</td>
+                    <td>
+                        <button>Edit</button>
+                        <button onclick="deleteRouteData('${key}')">Delete</button>
+                    </td>
+                `;
+        
+                tableBody.appendChild(row);
+            });
+        } else {
+            tableBody.innerHTML = '<tr><td colspan="6">No Routes found</td></tr>';
+        }
+    }, function(error) {
+            console.error("Error retrieving data:", error);
+            tableBody.innerHTML = '<tr><td colspan="6">Error loading data</td></tr>';
+    });
+}
+
+function deleteRouteData(routeKey) {
+    const routeRef = database.ref(`Route/${routeKey}`);
+
+    routeRef.remove()
+        .then(() => {
+            console.log("Route deleted successfully");
+        })
+        .catch((error) => {
+            console.error("Error deleting Route", error.message);
+            alert(`Error deleting Route: ${error.message}`);
+        });
+
+        retrieveRoutes();
+}
+
+function addRouteData(origin, destination, fare, service) {
+    const newRouteKey = database.ref('Route').push().key;
+    const routeData = {
+        origin: origin,
+        destination: destination,
+        fare: fare,
+        service: service
+    };
+
+    database.ref('Route').child(newRouteKey).set(routeData)
+        .then(() => {
+            console.log("Route added successfully");
+        })
+        .catch((error) => {
+            console.error("Error adding route", error.message);
+            alert(`Error adding route: ${error.message}`);
+        });
+    
+        retrieveRoutes();
+}
+
+function addDriverData(fname, lname, bodyNum, contactNum, password) {
     driverRegister(contactNum, password, fname)
         .then((user) => {
             const newEmployeeKey = database.ref('Employee').push().key;
@@ -182,7 +359,11 @@ function checkAuthState() {
     auth.onAuthStateChanged((user) => {
         if (user) {
             const username = user.displayName || user.email;
-            // update username UI here
+
+            const user_display_name = document.getElementById("user-display-name");
+            if (user_display_name) {
+                user_display_name.textContent = username;
+            }
         } else {
             const currentPath = window.location.pathname;
             if (!currentPath.includes("login.html") && !currentPath.includes("signup.html")) {
@@ -254,10 +435,6 @@ function logout() {
 
 checkAuthState();
 
-if (window.location.pathname.includes("employee.html")){
-    retrieveEmployeeData();
-}
-
 if (window.location.pathname.includes("signup.html")) {
     document.getElementById("signup-form").addEventListener("submit", (event) => {
         event.preventDefault();
@@ -283,4 +460,20 @@ if (window.location.pathname.includes("login.html")) {
         const password = document.getElementById("password").value;
         login(email, password);
     });
+}
+
+if (window.location.pathname.includes("employee.html")){
+    retrieveEmployeeData();
+}
+
+if (window.location.pathname.includes("customer.html")){
+    retrieveCustomerData();
+}
+
+if (window.location.pathname.includes("routes.html")) {
+    retrieveRoutes();
+}
+
+if (window.location.pathname.includes("history.html")) {
+    retrieveHistory();
 }

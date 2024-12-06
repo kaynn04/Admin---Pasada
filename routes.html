@@ -61,6 +61,39 @@
         </div>
      </div>
 
+     <!-- Modal -->
+    <div id="add-route-modal" class="modal">
+        <div class="modal-content">
+            <h2>Route Information</h2>
+            <div class="modal-actions">
+                <div class="signup-wrapper">
+                    <div class="signup-card">
+                        <form id="addRoute-form" action="#" method="POST">
+                            <div class="input-wrapper">
+                                <label for="origin">Origin</label>
+                                <input type="origin" id="origin" name="origin" placeholder="Origin" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="destination">Destination</label>
+                                <input type="destination" id="destination" name="destination" placeholder="Destination" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="fare">Fare</label>
+                                <input type="fare" id="fare" name="fare" placeholder="Fare" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="service">Service</label>
+                                <input type="service" id="service" name="service" placeholder="Service" required>
+                            </div>
+                            <button type="submit" id="addRoute-btn" class="addDriver-btn">Add Route</button>
+                        </form>
+                    </div>
+                </div>
+                <button onclick="closeAddRouteModal()">Cancel</button>
+            </div>
+        </div>
+     </div>
+
     <div class="main-content">
         <header>
             <div class="logo-wrapper">
@@ -81,7 +114,7 @@
             <div class="user-wrapper">
                 <img src="images/MyPicture.jpg" width="40px" height="40px" alt="">
                 <div>
-                    <h4>Kyan Oclares</h4>
+                    <h4 id="user-display-name">Kyan Oclares</h4>
                     <small>admin</small>
                 </div>
             </div>
@@ -113,7 +146,7 @@
             </div>
 
             <div class="route-header">
-                <button class="add-route">Add Route</button>
+                <button class="add-route" onclick="showAddRouteModal(event)">Add Route</button>
                 <span class="route-count">Total Destinations: 0</span>
                 <button class="remove-route">Remove Route</button>
             </div>
@@ -148,6 +181,9 @@
         </main>
     </div>
     
-<script src="script.js"></script>   
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-auth.js"></script>
+    <script src="script.js"></script>      
 </body>
 </html>
